@@ -7,6 +7,8 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { MathChallengeComponent } from './math-challenge/math-challenge.component';
 import { SudokoProblemComponent } from './sudoko-problem/sudoko-problem.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppLayoutComponent } from './app-layout/app-layout.component';
 
 @NgModule({
   declarations: [
@@ -15,10 +17,12 @@ import { SudokoProblemComponent } from './sudoko-problem/sudoko-problem.componen
     FooterComponent,
     HomeComponent,
     MathChallengeComponent,
-    SudokoProblemComponent
+    SudokoProblemComponent,
+    AppLayoutComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

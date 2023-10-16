@@ -2,3 +2,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.zain {
+  background-image: url('assets/pexels-andrea-piacquadio-3768126.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* You can further customize the background as needed */
+}
+body {
+  border: 3px solid #ffffff; /* Set the border color and width */
+  border-radius: 10px; /* Set the border radius for rounded corners */
+  padding: 10px;
+}
