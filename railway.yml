@@ -1,0 +1,5 @@
+frontend:
+  builder: railway/frontend
+  run:
+    - npm install
+    - npm run build
