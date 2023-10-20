@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
+import {ScrollService} from "../scroll.service";
 
 @Component({
   selector: 'app-header',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  constructor(private scrollService: ScrollService) {}
 
+  scrollToBottom(name: string) {
+    this.scrollService.scrollToElement(name);
+  }
 }

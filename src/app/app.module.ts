@@ -9,6 +9,9 @@ import { MathChallengeComponent } from './math-challenge/math-challenge.componen
 import { SudokoProblemComponent } from './sudoko-problem/sudoko-problem.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
+import {SudokoComponent} from "./sudoko/sudoko.component";
+import {FormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
@@ -19,12 +22,15 @@ import { AppLayoutComponent } from './app-layout/app-layout.component';
     MathChallengeComponent,
     SudokoProblemComponent,
     AppLayoutComponent,
+    SudokoComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

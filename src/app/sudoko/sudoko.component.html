@@ -1,0 +1,15 @@
+<!-- sudoku.component.html -->
+<table>
+  <tr *ngFor="let row of sudokuGrid; let i = index">
+    <ng-container *ngFor="let cell of row; let j = index">
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="sudokuGrid[i][j]"
+          min="1"
+          max="{{ size }}"
+        />
+      </td>
+    </ng-container>
+  </tr>
+</table>
