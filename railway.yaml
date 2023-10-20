@@ -1,6 +1,6 @@
 frontend:
   builder: railway/frontend
   run:
-    - npm install --omit=dev
-    - npm run build
+    - npm run start
+
 
