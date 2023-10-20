@@ -1,4 +1,4 @@
-[![Project Demo](video_thumbnail.png)](https://youtu.be/PjVo6WV9Ei4)
+[![Project Demo](image.png)](https://youtu.be/PjVo6WV9Ei4)
 
 
 
