@@ -1,3 +1,8 @@
+[![Project Demo](video_thumbnail.png)](https://youtu.be/PjVo6WV9Ei4)
+
+
+
+
 # MathGridChallenge
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.5.
