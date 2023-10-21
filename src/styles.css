@@ -7,7 +7,7 @@
   background-image: url('assets/pexels-andrea-piacquadio-3768126.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  position: relative;
+  position: static;
 }
 
 .zain::before {
@@ -28,12 +28,50 @@ body {
   border: 0px solid #ffffff; /* Set the border color and width */
   border-radius: 10px; /* Set the border radius for rounded corners */
   padding: 0px 6px 6px 6px;
-  background-image: url('assets/grey_halftone_dark_background.jpg');
+  background-image: url('assets/jack-b-bOfCH9TnRg4-unsplash.jpg');
 }
 
+h1,h2,h3,h4,h5{
 
+  animation: fadeIn 3s;
+  -webkit-animation: fadeIn 3s;
+  -moz-animation: fadeIn 3s;
+  -o-animation: fadeIn 3s;
+  -ms-animation: fadeIn 3s;
+}
 
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
+@-moz-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-o-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-ms-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+p{
+  animation: fadeIn 5s;
+  -webkit-animation: fadeIn 5s;
+  -moz-animation: fadeIn 5s;
+  -o-animation: fadeIn 5s;
+  -ms-animation: fadeIn 5s;
+}
 
 
 
