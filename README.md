@@ -1,3 +1,15 @@
+# click on the picture to see a Home Page 👇
+
+[![Project Demo](image.png)](https://youtu.be/PjVo6WV9Ei4)
+
+
+
+## to do :
+ - land sudoku page and math solver page
+ - make an API key for security
+
+## period remaining
+- two days
 # MathGridChallenge
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.5.
