@@ -1,4 +1,4 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {ScrollService} from "../scroll.service";
 
 @Component({
@@ -9,6 +9,9 @@ import {ScrollService} from "../scroll.service";
 export class HeaderComponent {
   constructor(private scrollService: ScrollService) {}
 
+  onNavLinkClick(name:string){
+    this.scrollService.onNavLinkClick(name);
+  }
   scrollToBottom(name: string) {
     this.scrollService.scrollToElement(name);
   }

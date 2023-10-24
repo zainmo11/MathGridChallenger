@@ -27,8 +27,9 @@
 body {
   border: 0px solid #ffffff; /* Set the border color and width */
   border-radius: 10px; /* Set the border radius for rounded corners */
-  padding: 0px 6px 6px 6px;
+  padding: 0px 4px 4px 2px;
   background-image: url('assets/jack-b-bOfCH9TnRg4-unsplash.jpg');
+
 }
 
 h1,h2,h3,h4,h5{
@@ -72,8 +73,10 @@ p{
   -o-animation: fadeIn 5s;
   -ms-animation: fadeIn 5s;
 }
-
-
-
-
-
+@layer base {
+  #exampleFormControlInputNumber[type="number"]::-webkit-inner-spin-button,
+  #exampleFormControlInputNumber[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

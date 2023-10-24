@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import {SudokoComponent} from "./sudoko/sudoko.component";
 import {FormsModule} from "@angular/forms";
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import {FormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
