@@ -1,6 +1,6 @@
-import {Component,} from '@angular/core';
+import {Component, OnInit,} from '@angular/core';
 import {DataService} from '../data.service'
-import {equation, TableRow} from "../table-row";
+import {TableRow} from "../table-row";
 import {strings} from "@material/slider";
 import {catchError, map, Observable, of} from "rxjs";
 @Component({
@@ -10,6 +10,7 @@ import {catchError, map, Observable, of} from "rxjs";
 })
 
 export class MathChallengeComponent  {
+
   public tableData: TableRow[] = [];
   public inputValue: number = 0;
   public inputEquation:string=""
@@ -67,12 +68,12 @@ export class MathChallengeComponent  {
 
     );
     this.startQuiz()
-    this.start = false;
   }
   onSubmit() {
     console.log(this.inputValue); // Log the input value
     // You can perform any further actions with the input value here
     this.showSuccess =false;
+
   }
 
 
@@ -123,15 +124,15 @@ export class MathChallengeComponent  {
     // Check if the input contains only alphanumeric characters (letters and numbers) and is not empty
     if (/^[a-zA-Z0-9]+$/.test(participantName)) {
       const requestBody={
-        'model' :this.selectedLevel,
         'participant_name' : this.userName
       }
       // Send an HTTP request to your backend API to check if the username exists
       this.dataService.postData(`check_part/`,requestBody)
         .subscribe(response=>{
-          if (response.userExists) {
+          if (response.user_exists) {
             this.showSuccess = false; // Username exists
             this.showError = true;
+            this.start = false
           } else {
             this.showSuccess = true; // Username doesn't exist
             this.showError = false;
