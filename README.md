@@ -1,3 +1,7 @@
+# link of hosting page will be available tomorrow ISA
+
+
+
 # click on the picture to see a Home Page 👇
 
 [![Project Demo](image.png)](https://youtu.be/PjVo6WV9Ei4)
@@ -5,8 +9,9 @@
 
 
 ## to do :
- - land sudoku page and math solver page
- - make an API key for security
+ - land sudoku page and<s> math solver page</s>
+   
+<s> - make an API key for security </s>
 
 ## period remaining
 - two days
