@@ -9,7 +9,6 @@ import { MathChallengeComponent } from './math-challenge/math-challenge.componen
 import { SudokoProblemComponent } from './sudoko-problem/sudoko-problem.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
-import {SudokoComponent} from "./sudoko/sudoko.component";
 import {FormsModule} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 
@@ -22,7 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     MathChallengeComponent,
     SudokoProblemComponent,
     AppLayoutComponent,
-    SudokoComponent,
+
   ],
   imports: [
     BrowserModule,

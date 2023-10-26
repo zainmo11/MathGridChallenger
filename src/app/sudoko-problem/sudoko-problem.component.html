@@ -1,7 +1,25 @@
-//range steps
+<div class="sudoku-grid">
+  <ng-container *ngFor="let row of sudoku; let rowIndex = index">
+    <div class="sudoku-row" [class.top]="rowIndex % 3 === 0" [class.bottom]="rowIndex % 3 === 2">
+      <ng-container *ngFor="let field of row; let colIndex = index">
+        <div class="sudoku-cell"
+             [class.left]="colIndex % 3 === 0"
+             [class.right]="colIndex % 3 === 2"
+             (click)="onFieldClick(field)">
+          <div class="sudoku-value">{{ field.value }}</div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
+<div class="flex items-center justify-center">
+  <div
 
-
-<label for="steps-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Range steps</label>
-<input id="steps-range"  min="0" max="5" value="2.5" step="0.5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-<app-sudoko></app-sudoko>
+    class=" my-32 block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700  h-[200px] w-[600px]">
+    <h5
+      class="mb-2 text-4xl font-medium leading-tight text-neutral-800 dark:text-neutral-50 text-center text-red-500 ">
+      Sorry message :
+    </h5>
+    <p>بعتذر اني مقدرتش اخلص الجزء كنت بسافر كتير الفتره الي فاتت فمكنش في وقت كفايه اني اكمله انا يعتبر خلصت جزء الباك اند بتاعه كله مفضلش بس الا اني اعرضه في ال فرونت</p>
+  </div>
+</div>
