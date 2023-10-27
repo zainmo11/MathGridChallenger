@@ -197,7 +197,6 @@ export class MathChallengeComponent implements OnInit {
 
   // Function to start the quiz and set the timer
   startQuiz() {
-    this.score = 0
     this.currentTime = 0;
     this.timerInterval = setInterval(() => {
       this.currentTime++;
@@ -227,6 +226,10 @@ export class MathChallengeComponent implements OnInit {
       this.score = 6;
     } else if (this.currentTime <= 10) {
       this.score = 2;
+    }
+    else
+    {
+      this.score = 100 ;
     }
 
 
