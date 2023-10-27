@@ -44,19 +44,16 @@ export class MathChallengeComponent implements OnInit {
     return this.dataService.getDataPart(`data/${model}`);
   }
 
-  submitForm() {
+  async submitForm() {
     this.onSubmit();
-    this.postanswer();
-    console.log(this.score);
-
-    console.log(this.score);
-    this.finishQuiz();
+    await this.postanswer();
     this.retrieveAndSortData();
     this.start = false;
     this.login = false;
     this.submitAnswer();
     this.Submission_Time = new Date().toISOString().split('.')[0] + 'Z'
     this.postUser()
+    console.log(this.score);
   }
 
   startForm(){
@@ -73,10 +70,9 @@ export class MathChallengeComponent implements OnInit {
 
     );
     this.startQuiz()
+    this.showSuccess = false;
   }
   onSubmit() {
-    console.log(this.inputValue); // Log the input value
-    // You can perform any further actions with the input value here
     this.showSuccess =false;
 
   }
@@ -108,32 +104,32 @@ export class MathChallengeComponent implements OnInit {
     )
 
   }
-  postanswer() {
-    // Assuming this.inputValue contains 'equation' and 'user_answer'
-    const requestBody = {
-      equation: this.inputEquation,
-      user_answer: this.inputValue
-    };
+  async postanswer() {
+    try {
+      // Assuming this.inputValue contains 'equation' and 'user_answer'
+      const requestBody = {
+        equation: this.inputEquation,
+        user_answer: this.inputValue,
+      };
 
-    this.dataService.postData('validate_answer/', requestBody)
-      .subscribe(response => {
-          if (response.is_correct === true) {
-            this.answer = true
-            // Handle a correct answer
-            console.log('Answer is correct');
-          } else if (response.is_correct === false) {
-            // Handle an incorrect answer
-            this.answer = false;
-            console.log('Answer is incorrect');
-          } else {
-            // Handle other responses or errors
-            console.log('Response not as expected');
-          }
-        },
-        error => {
-          // Handle HTTP error (e.g., server not reachable)
-          console.error('Error:', error);
-        });
+      const response = await this.dataService.postData('validate_answer/', requestBody).toPromise();
+
+      if (response.is_correct === true) {
+        this.answer = true;
+        // Handle a correct answer
+        console.log('Answer is correct');
+      } else if (response.is_correct === false) {
+        // Handle an incorrect answer
+        this.answer = false;
+        console.log('Answer is incorrect');
+      } else {
+        // Handle other responses or errors
+        console.log('Response not as expected');
+      }
+    } catch (error) {
+      // Handle HTTP error (e.g., server not reachable)
+      console.error('Error:', error);
+    }
   }
 
   onInputChange() {
@@ -197,10 +193,10 @@ export class MathChallengeComponent implements OnInit {
 
   // Function to start the quiz and set the timer
   startQuiz() {
+    this.score = 0
     this.currentTime = 0;
     this.timerInterval = setInterval(() => {
       this.currentTime++;
-      console.log(this.currentTime)
       if (this.currentTime === this.maxTime) {
         // Handle the case when the timer reaches the maximum time
         this.finishQuiz();
@@ -211,6 +207,7 @@ export class MathChallengeComponent implements OnInit {
 
   // Function to submit the user's answer
   submitAnswer() {
+
     if (this.answer) {
       this.calculateScore();
     }
@@ -218,21 +215,15 @@ export class MathChallengeComponent implements OnInit {
 
   // Function to calculate the score based on timing
   calculateScore() {
-    if (this.currentTime <= 3) {
+    if (this.currentTime <= 5) {
       this.score = 10;
-    } else if (this.currentTime <= 6) {
-      this.score = 8;
     } else if (this.currentTime <= 8) {
-      this.score = 6;
+      this.score = 8;
     } else if (this.currentTime <= 10) {
+      this.score = 6;
+    } else if (this.currentTime <= 12) {
       this.score = 2;
     }
-    else
-    {
-      this.score = 100 ;
-    }
-
-
   }
 
   // Function to finish the quiz and reset the timer
