@@ -1,7 +1,7 @@
 <div class="flex items-center justify-center">
 <div
 
-  class=" mt-32 block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700  h-[200px] w-[600px]">
+  class=" mt-32 block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700  h-[250px] w-[600px]">
   <h5
     class="mb-2 text-4xl font-medium leading-tight text-neutral-800 dark:text-neutral-50 text-center text-red-500 ">
     instructions
@@ -15,6 +15,9 @@
     </li>
     <li>
       3- press the Start button and solve the problem
+    </li>
+    <li>
+      <span class="font-bold text-red-700">(Important):</span> <br>The number of parameters will range from 2 to 10<br> the digits will range from 1 to 10.
     </li>
   </ol>
 </div>
@@ -35,7 +38,7 @@
 
 
 
-<div [style.pointer-events]="!showSuccess ? 'none' : 'auto'">
+<div [style.pointer-events]="(login && start) ?  'auto': 'none' ">
 
 <div
   class="block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700  h-[400px] w-[800px]">
@@ -72,7 +75,7 @@
 <!--// select level-->
 
 
-<div [style.pointer-events]="(!showSuccess && start) ? 'none' : 'auto'" class="mt-[50px]">
+<div [style.pointer-events]="(!login) ? 'none' : 'auto'" class="mt-[50px]">
 <h3 class="mb-4 font-semibold text-white dark:text-white ">Choose Level:</h3>
 <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
   <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
@@ -103,9 +106,10 @@
       type="number"
       id="quantity1"
       name="quantity1"
-      min="1"
+      min="2"
       max="10"
       class="w-16 px-2 py-1 border border-neutral-300 dark:border-neutral-600 rounded text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-primary-400 dark:focus:ring-primary-700"
+      (input)="onInputChangepara()"
     />
   </div>
 
@@ -113,29 +117,33 @@
     <label for="quantity2" class="block mb-4 font-semibold text-white dark:text-white">Number of Digits:</label>
     <input
       [(ngModel)]="no_digits"
-      value="1"
       type="number"
       id="quantity2"
       name="quantity2"
       min="1"
       max="10"
       class="w-16 px-2 py-1 border border-neutral-300 dark:border-neutral-600 rounded text-neutral-900 dark:text-neutral-100 focus:ring-2 focus:ring-primary-400 dark:focus:ring-primary-700"
+      (input)="onInputChange()"
     />
   </div>
 </div>
+
+</div>
 <div  class="flex justify-center" >
-<button type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 ml-4 mt-2 w-[300px] h-[50px] mb-14" (click)="startForm()">Start</button>
-<!--// input name-->
+  <button [disabled]="!showSuccess" type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 ml-4 mt-2 w-[300px] h-[50px] mb-14" (click)="startForm()">Start</button>
+  <!--// input name-->
 </div>
+
+<div class="flex items-center justify-center mt-12">
+  <div class="text-center bg-gradient-to-br from-red-500 to-purple-500 m-1 scroll-fade w-[500px] p-4 items-center justify-center rounded-lg shadow-lg">
+    <h1 class="text-5xl font-bold mb-3 font-black text-white">Score Board</h1>
+  </div>
 </div>
-
-
-
 <!--// table-->
 
-<div class="relative overflow-x-auto">
+<div class="relative overflow-x-auto mt-8">
   <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <thead class="text-5xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
       <th scope="col" class="px-6 py-3">
         Participant Name
@@ -151,13 +159,13 @@
       </th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="text-3xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr *ngFor="let participant of tableData">
     <td class="px-6 py-4">
       {{ participant.Participant_Name }}
     </td>
     <td class="px-6 py-4">
-      {{ participant.Submission_Time | date }}
+      {{ participant.Submission_Time  }}
     </td>
     <td class="px-6 py-4">
       {{ participant.Score }}

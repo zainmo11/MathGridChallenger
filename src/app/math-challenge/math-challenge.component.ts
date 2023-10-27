@@ -1,15 +1,17 @@
-import {Component, OnInit,} from '@angular/core';
+import {Component, OnInit,OnChanges} from '@angular/core';
 import {DataService} from '../data.service'
 import {TableRow} from "../table-row";
 import {strings} from "@material/slider";
-import {catchError, map, Observable, of} from "rxjs";
+import {catchError, forkJoin, map, Observable, of} from "rxjs";
+import {Time} from "@angular/common";
+import {response} from "express";
 @Component({
   selector: 'app-math-challenge',
   templateUrl: './math-challenge.component.html',
   styleUrls: ['./math-challenge.component.css']
 })
 
-export class MathChallengeComponent  {
+export class MathChallengeComponent implements OnInit {
 
   public tableData: TableRow[] = [];
   public inputValue: number = 0;
@@ -20,7 +22,7 @@ export class MathChallengeComponent  {
   public no_digits : number =1;
 
   public answer:boolean = false;
-  public no_parameters: number = 1
+  public no_parameters: number = 2
 
   public userName :string = "";
   comment: string = '';
@@ -28,6 +30,7 @@ export class MathChallengeComponent  {
 
   public showSuccess :boolean = false;
   public showError :boolean = false
+  private Submission_Time: any;
 
   submitComment() {
 
@@ -37,28 +40,30 @@ export class MathChallengeComponent  {
   constructor(private dataService: DataService) {
 
   }
-  getParticipantsData(model: string) {
-    this.dataService.getDataPart(`data/${model}`)
-      .subscribe(data => {
-        this.tableData = data;
-      });
+  getParticipantsData(model: string): Observable<TableRow[]> {
+    return this.dataService.getDataPart(`data/${model}`);
   }
 
   submitForm() {
     this.onSubmit();
     this.postanswer();
     console.log(this.score);
-    this.submitAnswer();
+
     console.log(this.score);
     this.finishQuiz();
-    this.getParticipantsData(this.selectedLevel);
-    this.start = true;
+    this.retrieveAndSortData();
+    this.start = false;
+    this.login = false;
+    this.submitAnswer();
+    this.Submission_Time = new Date().toISOString().split('.')[0] + 'Z'
+    this.postUser()
   }
 
   startForm(){
     this.getEquations(this.selectedLevel, this.no_parameters, this.no_digits).subscribe(
       (equation: string) => {
         this.inputEquation = equation;
+        this.start = true;
       },
       (error) => {
         // Handle the error if needed
@@ -88,7 +93,21 @@ export class MathChallengeComponent  {
       );
   }
 
+  postUser(){
+    const requestBody ={
+      'Participant_Name':this.userName,
+      'Submission_Time' :this.Submission_Time,
+      'Score' :this.score,
+      'level_params_digits':`${this.selectedLevel}-${this.no_parameters}-${this.no_digits}`,
+    }
+    console.log(requestBody)
+    return this.dataService.postData(`data/${this.selectedLevel}/`,requestBody).subscribe(
+      response =>{
+        console.log(response)
+      }
+    )
 
+  }
   postanswer() {
     // Assuming this.inputValue contains 'equation' and 'user_answer'
     const requestBody = {
@@ -117,7 +136,22 @@ export class MathChallengeComponent  {
         });
   }
 
-
+  onInputChange() {
+    // Ensure the value is within the valid range (1 to 10)
+    if (this.no_digits < 1) {
+      this.no_digits = 1; // Set to the minimum value
+    } else if (this.no_digits > 10) {
+      this.no_digits = 10; // Set to the maximum value
+    }
+  }
+  onInputChangepara() {
+    // Ensure the value is within the valid range (1 to 10)
+    if (this.no_parameters < 2) {
+      this.no_parameters = 2; // Set to the minimum value
+    } else if (this.no_parameters > 10) {
+      this.no_parameters = 10; // Set to the maximum value
+    }
+  }
 
   checkUsername() {
     const participantName = this.userName;
@@ -131,10 +165,11 @@ export class MathChallengeComponent  {
         .subscribe(response=>{
           if (response.user_exists) {
             this.showSuccess = false; // Username exists
+            this.login = false;
             this.showError = true;
-            this.start = false
           } else {
-            this.showSuccess = true; // Username doesn't exist
+            this.showSuccess = true;// Username doesn't exist
+            this.login = true;
             this.showError = false;
           }
         },
@@ -145,12 +180,13 @@ export class MathChallengeComponent  {
     } else {
       // Handle the case when the input is invalid (contains non-alphanumeric characters or is empty)
       this.showSuccess = false;
+      this.login = false;
       this.showError = true;
     }
   }
 
-
-  start:boolean = true;
+  login : boolean = false
+  start:boolean = false;
 
   score: number = 5;
 
@@ -165,11 +201,13 @@ export class MathChallengeComponent  {
     this.currentTime = 0;
     this.timerInterval = setInterval(() => {
       this.currentTime++;
+      console.log(this.currentTime)
       if (this.currentTime === this.maxTime) {
         // Handle the case when the timer reaches the maximum time
         this.finishQuiz();
       }
     }, 1000); // Update the timer every second (1000 milliseconds)
+
   }
 
   // Function to submit the user's answer
@@ -200,5 +238,22 @@ export class MathChallengeComponent  {
     this.answer = false;
     this.currentTime = 0;
     this.score = 0;
+  }
+
+  retrieveAndSortData() {
+    const easyData$ = this.getParticipantsData("EasyLevel");
+    const mediumData$ = this.getParticipantsData("MediumLevel");
+    const hardData$ = this.getParticipantsData("HardLevel");
+
+    forkJoin([easyData$, mediumData$, hardData$]).subscribe(([easyData, mediumData, hardData]) => {
+      this.tableData = easyData.concat(mediumData, hardData);
+      this.sortDataByScore();
+    });
+  }
+  sortDataByScore() {
+    this.tableData.sort((a, b) => b.Score - a.Score);
+  }
+  ngOnInit(): void {
+    this.retrieveAndSortData();
   }
 }
