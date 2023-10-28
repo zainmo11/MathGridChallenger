@@ -17,7 +17,7 @@ export class MathChallengeComponent implements OnInit {
   public inputValue: number = 0;
   public inputEquation:string=""
 
-  public selectedLevel: string = "";
+  public selectedLevel: string = "EasyLevel";
 
   public no_digits : number =1;
 
