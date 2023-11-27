@@ -47,13 +47,13 @@ export class MathChallengeComponent implements OnInit {
   async submitForm() {
     this.onSubmit();
     await this.postanswer();
-    this.retrieveAndSortData();
     this.start = false;
     this.login = false;
     this.submitAnswer();
-    this.Submission_Time = new Date().toISOString().split('.')[0] + 'Z'
-    this.postUser()
-    console.log(this.score);
+    this.Submission_Time = new Date().toISOString().split('.')[0] + 'Z';
+    this.postUser();
+    //console.log(this.score);
+    this.retrieveAndSortData();
   }
 
   startForm(){
